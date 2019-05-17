@@ -1,0 +1,63 @@
+# FIXME: enable `generate_tasks`. for now all specs need to run together or not everything is loaded correctly!
+#
+# tasks: {}
+# generate_tasks:
+#   include_match: spec/.*_spec.rb
+# task_defaults:
+#   scripts:
+#     test:
+#       timeout: 5 Minutes
+#       body: |
+#         #!/usr/bin/env bash
+#         set -eux
+#         export PATH=~/.rubies/$RUBY/bin:$PATH
+#         bundle exec rspec --no-color --format documentation \
+#           $CIDER_CI_TASK_FILE
+tasks:
+  all_specs: {}
+# END FIXME
+
+script_defaults:
+  template_environment_variables: true
+
+task_defaults:
+  include:
+    - path: cider-ci/task-components/database.yml
+      submodule: [datalayer]
+    - path: cider-ci/task-components/bundle.yml
+      submodule: [datalayer]
+
+  scripts:
+    test:
+      timeout: 5 Minutes
+      body: |
+        #!/usr/bin/env bash
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        bundle exec rspec --no-color --format documentation spec
+
+  max_trials: 3
+  dispatch_storm_delay_duration: 1 seconds
+
+  environment_variables:
+    CI: "true"
+    RAILS_ENV: test
+    LANG: "en_US.UTF-8"
+    DATABASE: madek_graphql_{{CIDER_CI_TRIAL_ID}}
+
+  git_options:
+    submodules:
+      include_match: ^.*$
+
+  trial_attachments:
+    screenshots:
+      include_match: 'tmp\/.+\.png$'
+      content_type: image/png
+    logs:
+      include_match: 'logs?\/.+\.log$'
+      exclude_match: 'vendor\/'
+      content_type: text/plain
+    config:
+      include_match: 'config\/.+\.ya?ml$'
+      exclude_match: 'vendor\/'
+      content_type: text/yaml
