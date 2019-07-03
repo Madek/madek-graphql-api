@@ -115,6 +115,9 @@ An ISO 8601-encoded datetime
 """
 scalar ISO8601DateTime
 
+"""
+A MediaEntry is the representation of a file together with the associated (resp. `MediaFile` and `MetaData`).
+"""
 type MediaEntry {
   createdAt: ISO8601DateTime
   id: String!

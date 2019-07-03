@@ -1,3 +1,4 @@
 #!/bin/bash -exu
 
 bundle exec rake dump_graphql_schema
+bundle exec rake build_graphql_docs

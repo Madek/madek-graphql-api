@@ -1,5 +1,9 @@
 module Types
   class MediaEntryType < Types::BaseObject
+    description <<~MARKDOWN
+     A MediaEntry is the representation of a file together with the associated (resp. `MediaFile` and `MetaData`).
+    MARKDOWN
+
     field :id, String, null: false
     field :created_at, GraphQL::Types::ISO8601DateTime, null: true
     field :title, String, null: true
