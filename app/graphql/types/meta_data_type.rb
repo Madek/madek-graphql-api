@@ -5,7 +5,7 @@ module Types
     field :values, [ValueType], null: true
 
     def values
-      [object.value]
+      object.value.is_a?(Enumerable) ? object.value : [object.value]
     end
   end
 end
