@@ -21,6 +21,15 @@ module Types
       argument :id, ID, required: true
     end
 
+    field :meta_data_by_context, [ContextMetaDataType], null: true do
+      description 'Query MetaData by contexts'
+      argument :contexts, [Types::ContextsEnum], required: false
+    end
+
+    def meta_data_by_context(contexts:)
+      contexts.any? ? Context.find(contexts) : Context.all
+    end
+
     def set(id:)
       begin
         collection = Collection.find(id)
