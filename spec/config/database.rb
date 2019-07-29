@@ -1,5 +1,5 @@
 RSpec.configure do |config|
-  config.before :all  do
+  config.before :each  do
     reset_database
     ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
   end
