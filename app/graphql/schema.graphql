@@ -145,33 +145,6 @@ type ContextMetaData {
 }
 
 """
-Contexts
-"""
-enum ContextsEnum {
-  ARCHHIST
-  COLUMNS
-  COPYRIGHT
-  CORE
-  FORSCHUNG_ZHDK
-  GAMES
-  INSTITUTION
-  LANDSCHAFTSVISUALISIERUNG
-  MEDIA_CONTENT
-  MEDIA_OBJECT
-  MEDIA_SET
-  NUTZUNG
-  PERFORMANCE_ARTEFAKTE
-  PROJEKTE_ZHDK
-  SQ6
-  SUPPLYLINES
-  TONI
-  UPLOAD
-  VFO
-  ZETT
-  ZHDK_BEREICH
-}
-
-"""
 An ISO 8601-encoded datetime
 """
 scalar ISO8601DateTime
@@ -470,7 +443,7 @@ type Query {
   """
   Query MetaData by contexts
   """
-  metaDataByContext(contexts: [ContextsEnum!]): [ContextMetaData!]
+  metaDataByContext(contexts: [String!]): [ContextMetaData!]
 
   """
   Find a Collection by ID
