@@ -1,10 +1,13 @@
 describe 'querying Metadata by Context', type: :request do
-  %w{0 1 2}.each do |n|
-    context_key = "context_key_#{n}"
-    let(context_key) { FactoryGirl.create(:context_key) }
-    let("context_#{n}") { send(context_key).context }
-    let("meta_datum_#{n}") { FactoryGirl.create(:meta_datum_title, meta_key: send(context_key).meta_key) }
-  end
+  let(:context_key_0) { FactoryGirl.create(:context_key) }
+  let(:context_key_1) { FactoryGirl.create(:context_key) }
+  let(:context_key_2) { FactoryGirl.create(:context_key) }
+  let(:context_0) { context_key_0.context }
+  let(:context_1) { context_key_1.context }
+  let(:context_2) { context_key_2.context }
+  let(:meta_datum_0) { FactoryGirl.create(:meta_datum_title, meta_key: context_key_0.meta_key) }
+  let(:meta_datum_1) { FactoryGirl.create(:meta_datum_title, meta_key: context_key_1.meta_key) }
+  let(:meta_datum_2) { FactoryGirl.create(:meta_datum_title, meta_key: context_key_2.meta_key) }
 
   before(:each) { set_meta_datum_and_contexts }
 
