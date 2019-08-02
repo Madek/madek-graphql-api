@@ -7,11 +7,11 @@
 describe 'MediaEntry Metadata', type: :request do
   let(:the_entry) do
     # TODO: entry with title, copyright, license, keyword, author
-    entry = FactoryGirl.create(:media_entry)
-    FactoryGirl.create(:meta_datum_title, media_entry: entry)
-    FactoryGirl.create(:meta_datum_text_date, media_entry: entry)
-    FactoryGirl.create(:meta_datum_people, media_entry: entry)
-    FactoryGirl.create(:meta_datum_keywords, media_entry: entry)
+    entry = create(:media_entry)
+    create(:meta_datum_title, media_entry: entry)
+    create(:meta_datum_text_date, media_entry: entry)
+    create(:meta_datum_people, media_entry: entry)
+    create(:meta_datum_keywords, media_entry: entry)
     entry
   end
   let(:vars) { { entryId: the_entry.id } }

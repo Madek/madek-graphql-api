@@ -3,7 +3,7 @@ describe MadekGraphqlSchema do
   let(:printout_defn) { File.read(Rails.root.join("app/graphql/schema.graphql")) }
 
   it 'allows queries 20 levels deep' do
-    collection = FactoryGirl.create(:collection)
+    collection = create(:collection)
     fill_collection_with_nested_collections(collection, 10)
     query = QueriesHelpers::CollectionQuery.new(10).query
     variables = { 'id' => collection.id,
@@ -23,7 +23,7 @@ describe MadekGraphqlSchema do
   end
 
   context 'media entries' do
-    let(:media_entry) { FactoryGirl.create(:media_entry_with_title) }
+    let(:media_entry) { create(:media_entry_with_title) }
     let(:variables) { { "id" => media_entry.id,
                         'mediaEntriesMediaTypes' => ['AUDIO'],
                         'previewsMediaTypes' => ['IMAGE'] } }

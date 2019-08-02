@@ -16,7 +16,7 @@ describe Types::QueryType do
 
       context 'response' do
 
-        let(:media_entry) { FactoryGirl.create(:media_entry_with_title) }
+        let(:media_entry) { create(:media_entry_with_title) }
         let(:query) { media_entry_query }
         let(:variables) { { 'id' => media_entry.id } }
         let(:response) { response_data(query, variables)['mediaEntry'] }
@@ -56,7 +56,7 @@ describe Types::QueryType do
 
       context 'response' do
         before(:all) do
-          FactoryGirl.create_list(:media_entry_with_title, 101)
+          create_list(:media_entry_with_title, 101)
         end
 
         context 'for query with no arguments specified' do
@@ -106,9 +106,9 @@ describe Types::QueryType do
       end
 
       context 'response' do
-        let(:collection) { FactoryGirl.create(:collection,
+        let(:collection) { create(:collection,
                                                get_metadata_and_previews: true) }
-        let(:private_collection) { FactoryGirl.create(:collection) }
+        let(:private_collection) { create(:collection) }
         let(:first) { 2 }
         let(:query) { QueriesHelpers::CollectionQuery.new(0).query }
         let(:variables) { { 'id' => collection.id,
