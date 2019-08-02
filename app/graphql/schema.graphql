@@ -110,6 +110,40 @@ type CollectionEdge {
   node: Collection
 }
 
+type ContextKey {
+  description: String!
+  id: String!
+  label: String
+  metaKey: MetaKey
+  position: String!
+}
+
+type ContextMetaData {
+  id: String!
+  label: String
+  metaData(
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
+    after: String
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+
+    """
+    Returns the first _n_ elements from the list.
+    """
+    first: Int
+
+    """
+    Returns the last _n_ elements from the list.
+    """
+    last: Int
+  ): MetaDataWithContextKeyConnection
+}
+
 """
 An ISO 8601-encoded datetime
 """
@@ -254,6 +288,46 @@ type MetaDataEdge {
   node: MetaData
 }
 
+type MetaDataWithContextKey {
+  contextKey: ContextKey
+  metaDatum: [MetaData!]
+}
+
+"""
+The connection type for MetaDataWithContextKey.
+"""
+type MetaDataWithContextKeyConnection {
+  """
+  A list of edges.
+  """
+  edges: [MetaDataWithContextKeyEdge]
+
+  """
+  A list of nodes.
+  """
+  nodes: [MetaDataWithContextKey]
+
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+}
+
+"""
+An edge in a connection.
+"""
+type MetaDataWithContextKeyEdge {
+  """
+  A cursor for use in pagination.
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge.
+  """
+  node: MetaDataWithContextKey
+}
+
 type MetaKey {
   id: String!
 }
@@ -365,6 +439,11 @@ type Query {
   Find a MediaEntry by ID
   """
   mediaEntry(id: ID!): MediaEntry
+
+  """
+  Query MetaData by contexts
+  """
+  metaDataByContext(contexts: [String!]): [ContextMetaData!]
 
   """
   Find a Collection by ID

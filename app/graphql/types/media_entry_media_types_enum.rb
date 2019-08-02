@@ -7,4 +7,3 @@ class Types::MediaEntryMediaTypesEnum < Types::BaseEnum
   value 'VIDEO', value: 'video'
   value 'AUDIO', value: 'audio'
 end
-

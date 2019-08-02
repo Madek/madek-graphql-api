@@ -1,8 +1,11 @@
 test:
   madek_url: https://medienarchiv.zhdk.ch
+  locale: 'de'
 
 development:
   madek_url: https://medienarchiv.zhdk.ch
+  locale: 'de'
 
 production:
   madek_url: https://medienarchiv.zhdk.ch
+  locale: 'de'
