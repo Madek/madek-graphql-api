@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module QueriesHelpers
   def media_entry_query
     "query getMediaEntry($id: ID!) {
@@ -29,8 +31,6 @@ module QueriesHelpers
     def initialize(depth = 0)
       @depth = depth
     end
-
-
 
     def query
       "query getSet($id: ID!,
@@ -116,21 +116,20 @@ module QueriesHelpers
        }"
     end
 
-
     def collections
-       "sets(first: $first, after: $cursor, orderBy: $orderBy) {
-         pageInfo {
-           endCursor
-           startCursor
-           hasPreviousPage
-           hasNextPage
-         }
-         edges {
-           node {
-             #{CollectionQuery.new(@depth - 1).subqueries}
-           }
-         }
-       }"
+      "sets(first: $first, after: $cursor, orderBy: $orderBy) {
+        pageInfo {
+          endCursor
+          startCursor
+          hasPreviousPage
+          hasNextPage
+        }
+        edges {
+          node {
+            #{CollectionQuery.new(@depth - 1).subqueries}
+          }
+        }
+      }"
     end
   end
 end

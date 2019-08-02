@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Config
   class << self
     YAML.safe_load(File.read('config/settings.yml'))[Rails.env].each do |method, value|

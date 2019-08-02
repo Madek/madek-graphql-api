@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Types
   class MetaDataType < Types::BaseObject
     field :id, String, null: true

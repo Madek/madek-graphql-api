@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Types::PreviewSizeClassesEnum < Types::BaseEnum
   graphql_name 'PreviewSizeClassesEnum'
   description 'Preview size class'
@@ -10,4 +12,3 @@ class Types::PreviewSizeClassesEnum < Types::BaseEnum
   value 'X_LARGE', value: 'x_large'
   value 'MAXIMUM', value: 'maximum'
 end
-

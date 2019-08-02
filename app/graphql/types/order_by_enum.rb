@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Types::OrderByEnum < Types::BaseEnum
   graphql_name 'OrderByEnum'
   description 'Paremeter for ordering resources'

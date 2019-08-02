@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CollectionsHelpers
   def fill_collection_with_nested_collections(collection, depth)
     depth.times do
@@ -8,12 +10,12 @@ module CollectionsHelpers
 
   def fill_collection_with_media_entries(collection, collection_size)
     collection.media_entries = create_list(:media_entry_with_title,
-                                                        collection_size)
+                                           collection_size)
   end
 
   def fill_collection_with_media_entries_with_images(collection, collection_size)
     collection.media_entries = create_list(:media_entry_with_image_media_file,
-                                                        collection_size)
+                                           collection_size)
   end
 
   def add_meta_data_titles_to_collection_media_entries(collection)

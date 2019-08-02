@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative './types/base_enum'
 
 class MadekGraphqlSchema < GraphQL::Schema

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #
 #  WORK
 #  IN
@@ -27,7 +29,7 @@ describe 'MediaEntry Metadata', type: :request do
     GRAPHQL
 
     expect(graphql_request(doc, vars).result).to eq(
-      { data: { mediaEntry: { id: the_entry.id } } }
+      data: { mediaEntry: { id: the_entry.id } }
     )
   end
 
@@ -54,12 +56,12 @@ describe 'MediaEntry Metadata', type: :request do
 
     md = the_entry.meta_data
     result_md = result[:data][:mediaEntry][:metaData][:nodes]
-    result_md_values = result_md.map{ |r| r[:values].map(&:values) }.flatten
+    result_md_values = result_md.map { |r| r[:values].map(&:values) }.flatten
     expect(result[:errors]).to be_nil
     expect(result[:data][:mediaEntry][:id]).to eq the_entry.id
     expect(result_md.count).to be 4
 
-    md.where(type: 'MetaDatum::Text').each_with_index do |md,index|
+    md.where(type: 'MetaDatum::Text').each_with_index do |md, _index|
       expect(result_md_values).to include md.string
     end
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'querying Metadata by Context', type: :request do
   let(:context_key_0) { create(:context_key) }
   let(:context_key_1) { create(:context_key) }
@@ -17,7 +19,7 @@ describe 'querying Metadata by Context', type: :request do
     meta_datum_2
   end
 
-  q =  <<-'GRAPHQL'
+  q = <<-'GRAPHQL'
     query($contexts: [String!]!) {
       metaDataByContext(contexts: $contexts) {
         id
@@ -68,8 +70,8 @@ describe 'querying Metadata by Context', type: :request do
       expect(kontext[:label]).to eq(c.labels[Config.locale])
 
       kontext_meta_data_node = kontext[:metaData][:edges][0][:node]
-      expect(kontext_meta_data_node[:metaDatum].map(&:values).flatten).
-        to include(send("meta_datum_#{i}").id)
+      expect(kontext_meta_data_node[:metaDatum].map(&:values).flatten)
+        .to include(send("meta_datum_#{i}").id)
 
       context_key = kontext_meta_data_node[:contextKey]
       expect(context_key[:id]).to eq(send("context_key_#{i}").id)

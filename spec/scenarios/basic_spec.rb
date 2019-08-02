@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'Request-based GraphQL integration tests', type: :request do
   example 'basic introspection works' do
     doc = <<-GRAPHQL
@@ -9,22 +11,20 @@ describe 'Request-based GraphQL integration tests', type: :request do
     expect(result[:errors]).not_to be_present
 
     expect(result).to eq(
-      { data: { __schema: { queryType: { name: 'Query' } } } }
+      data: { __schema: { queryType: { name: 'Query' } } }
     )
   end
 
   context 'correct error handling' do
     example 'invalid document' do
       expect(graphql_request('INVALID_DOCUMENT').result).to eq(
-        {
-          errors: [
-            {
-              locations: [{ column: 1, line: 1 }],
-              message:
-                'Parse error on "INVALID_DOCUMENT" (IDENTIFIER) at [1, 1]'
-            }
-          ]
-        }
+        errors: [
+          {
+            locations: [{ column: 1, line: 1 }],
+            message:
+              'Parse error on "INVALID_DOCUMENT" (IDENTIFIER) at [1, 1]'
+          }
+        ]
       )
     end
 
@@ -32,13 +32,13 @@ describe 'Request-based GraphQL integration tests', type: :request do
       let(:doc) do
         <<-GRAPHQL
         query typeByName($myTypeName: String!) { __type(name: $myTypeName) { name } }
-      GRAPHQL
+        GRAPHQL
       end
 
       it 'works' do
         vars = { myTypeName: 'Query' }
         expect(graphql_request(doc, vars).result).to eq(
-          { data: { __type: { name: 'Query' } } }
+          data: { __type: { name: 'Query' } }
         )
       end
 
@@ -46,23 +46,19 @@ describe 'Request-based GraphQL integration tests', type: :request do
         result = graphql_request(doc, {}).result
         expect(result[:errors].count).to be 1
         expect(result[:errors].first.slice(:locations, :message)).to eq(
-          {
-            locations: [{ column: 26, line: 1 }],
-            message:
-              'Variable myTypeName of type String! was provided invalid value'
-          }
+          locations: [{ column: 26, line: 1 }],
+          message:
+            'Variable myTypeName of type String! was provided invalid value'
         )
       end
 
       example 'error for wrong variable type' do
-        result = graphql_request(doc, { myTypeName: 1_234 }).result
+        result = graphql_request(doc, myTypeName: 1_234).result
         expect(result[:errors].count).to be 1
         expect(result[:errors].first.slice(:locations, :message)).to eq(
-          {
-            locations: [{ column: 26, line: 1 }],
-            message:
-              'Variable myTypeName of type String! was provided invalid value'
-          }
+          locations: [{ column: 26, line: 1 }],
+          message:
+            'Variable myTypeName of type String! was provided invalid value'
         )
       end
     end

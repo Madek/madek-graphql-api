@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ResponsesHelpers
   def stringified_created_ats_from_response(response)
     response.map do |media_entry|
@@ -16,6 +18,7 @@ module ResponsesHelpers
   def node_from_nested_connection(response, name, depth)
     depth.times do
       break unless response
+
       response = response[name] ? response[name]['edges'][0]['node'] : nil
     end
     response
@@ -25,5 +28,3 @@ module ResponsesHelpers
     response_hash.dig('edges', 0, 'node')
   end
 end
-
-

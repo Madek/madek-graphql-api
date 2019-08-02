@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Types
   class MediaEntryType < Types::BaseObject
     field :id, String, null: false
