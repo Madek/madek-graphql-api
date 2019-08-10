@@ -61,7 +61,7 @@ describe 'MediaEntry Metadata', type: :request do
     expect(result[:data][:mediaEntry][:id]).to eq the_entry.id
     expect(result_md.count).to be 4
 
-    md.where(type: 'MetaDatum::Text').each_with_index do |md, _index|
+    md.where(type: 'MetaDatum::Text').each do |md|
       expect(result_md_values).to include md.string
     end
 
