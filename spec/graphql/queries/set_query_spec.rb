@@ -60,11 +60,4 @@ describe 'getCollection' do
     expect(sample_node_of(response_media_entry['metaData'])['values'][0]['string'])
       .to be
   end
-
-  def set_collection
-    @collection = create(:collection, get_metadata_and_previews: true)
-    create(:meta_datum_title_with_collection, collection: @collection)
-    fill_collection_with_media_entries_with_images(@collection, 4)
-    add_meta_data_titles_to_collection_media_entries(@collection)
-  end
 end

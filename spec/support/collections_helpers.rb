@@ -23,4 +23,16 @@ module CollectionsHelpers
       create(:meta_datum_title, media_entry: me)
     end
   end
+
+  def set_collection
+    @collection = create(:collection, get_metadata_and_previews: true)
+    create(:meta_datum_title_with_collection, collection: @collection)
+    @image_media_entry_1 = create :media_entry_with_image_media_file
+    @audio_media_entry = create :media_entry_with_audio_media_file
+    @image_media_entry_2 = create :media_entry_with_image_media_file
+    @collection.media_entries = [@image_media_entry_1,
+                                 @audio_media_entry,
+                                 @image_media_entry_2]
+    add_meta_data_titles_to_collection_media_entries(@collection)
+  end
 end
