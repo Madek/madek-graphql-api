@@ -110,9 +110,11 @@ describe Types::QueryType do
           create(:collection,
                  get_metadata_and_previews: true)
         end
+
         let(:private_collection) { create(:collection) }
         let(:first) { 2 }
         let(:query) { QueriesHelpers::CollectionQuery.new(0).query }
+
         let(:variables) do
           { 'id' => collection.id,
             'first' => first,
@@ -120,6 +122,17 @@ describe Types::QueryType do
             'mediaEntriesMediaTypes' => %w[IMAGE AUDIO],
             'previewsMediaTypes' => %w[IMAGE AUDIO] }
         end
+
+        let(:media_entry_1) { create :media_entry_with_image_media_file }
+        let(:media_entry_2) { create :media_entry_with_image_media_file }
+        let(:media_entry_3) { create :media_entry_with_image_media_file }
+        let(:media_entry_4) { create :media_entry_with_image_media_file }
+        let!(:media_entries) { [ media_entry_1,
+                                media_entry_2,
+                                media_entry_3,
+                                media_entry_4 ] }
+
+
         let(:response) { response_data(query, variables)['set'] }
 
         it 'contains an error when collection is not public' do
@@ -135,20 +148,18 @@ describe Types::QueryType do
         end
 
         it 'contains first n media entries from collection as edges - an array of nodes' do
-          fill_collection_with_media_entries_with_images(collection, 4)
-
+          collection.media_entries = media_entries
           edges = response['childMediaEntries']['edges']
           node_keys = edges.map(&:keys).flatten.uniq
           ids = edges.map { |n| n['node']['id'] }
 
           expect(node_keys).to eq(%w[cursor node])
           expect(response['childMediaEntries']['edges'].length).to eq(first)
-          expect(ids).to eq(collection.media_entries.take(2).pluck(:id))
+          expect(ids).to eq([media_entry_1.id, media_entry_2.id])
         end
 
         it 'contains first n media entries after cursor' do
-          fill_collection_with_media_entries_with_images(collection, 4)
-
+          collection.media_entries = media_entries
           variables = { 'id' => collection.id,
                         'first' => first,
                         'cursor' => response['childMediaEntries']['edges'][1]['cursor'],
@@ -160,8 +171,7 @@ describe Types::QueryType do
         end
 
         it 'contains media entries ordered as speficied in query' do
-          fill_collection_with_media_entries_with_images(collection, 4)
-
+          collection.media_entries = media_entries
           query = QueriesHelpers::CollectionQuery.new(0).query
           variables = { 'id' => collection.id,
                         'first' => collection.media_entries.length,
@@ -169,11 +179,9 @@ describe Types::QueryType do
                         'mediaEntriesMediaTypes' => %w[IMAGE AUDIO],
                         'previewsMediaTypes' => %w[IMAGE AUDIO] }
           response = response_data(query, variables)['set']
-
           ids = response['childMediaEntries']['edges'].map { |n| n['node']['id'] }
-          ordered_media_entries = collection.media_entries.order('created_at ASC')
 
-          expect(ids).to eq(ordered_media_entries.ids)
+          expect(ids).to eq(media_entries.map(&:id))
         end
 
         it 'contains page info for media entries collection' do
