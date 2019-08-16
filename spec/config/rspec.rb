@@ -1,6 +1,5 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
-
   # Seed global randomization in this process using the `--seed` CLI option.
   Kernel.srand config.seed
   # Run specs in random order to surface order dependencies.
@@ -8,7 +7,7 @@ RSpec.configure do |config|
 
   # different configs for running a single test vs. running multiple
   if config.files_to_run.one?
-    config.default_formatter = "doc"
+    config.default_formatter = 'doc'
   else
     config.profile_examples = 10
   end
@@ -32,7 +31,7 @@ RSpec.configure do |config|
   #   - http://rspec.info/blog/2014/05/notable-changes-in-rspec-3/#zero-monkey-patching-mode
   # config.disable_monkey_patching!
 
-  # use RSpec 4 defaults: 
+  # use RSpec 4 defaults:
   config.shared_context_metadata_behavior = :apply_to_host_groups
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
@@ -41,4 +40,3 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 end
-

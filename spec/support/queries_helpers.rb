@@ -30,8 +30,6 @@ module QueriesHelpers
       @depth = depth
     end
 
-
-
     def query
       "query getSet($id: ID!,
                            $first: Int,
@@ -116,21 +114,20 @@ module QueriesHelpers
        }"
     end
 
-
     def collections
-       "sets(first: $first, after: $cursor, orderBy: $orderBy) {
-         pageInfo {
-           endCursor
-           startCursor
-           hasPreviousPage
-           hasNextPage
-         }
-         edges {
-           node {
-             #{CollectionQuery.new(@depth - 1).subqueries}
-           }
-         }
-       }"
+      "sets(first: $first, after: $cursor, orderBy: $orderBy) {
+        pageInfo {
+          endCursor
+          startCursor
+          hasPreviousPage
+          hasNextPage
+        }
+        edges {
+          node {
+            #{CollectionQuery.new(@depth - 1).subqueries}
+          }
+        }
+      }"
     end
   end
 end

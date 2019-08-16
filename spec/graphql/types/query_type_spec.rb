@@ -1,11 +1,7 @@
 describe Types::QueryType do
-
   describe 'MediaEntryType fields' do
-
     describe Types::QueryType.fields['mediaEntry'] do
-
       context 'field' do
-
         it 'requires and "id" argument of ID type' do
           id_arg = subject.arguments['id']
 
@@ -15,8 +11,7 @@ describe Types::QueryType do
       end
 
       context 'response' do
-
-        let(:media_entry) { FactoryGirl.create(:media_entry_with_title) }
+        let(:media_entry) { create(:media_entry_with_title) }
         let(:query) { media_entry_query }
         let(:variables) { { 'id' => media_entry.id } }
         let(:response) { response_data(query, variables)['mediaEntry'] }
@@ -35,7 +30,6 @@ describe Types::QueryType do
         end
       end
     end
-
 
     describe Types::QueryType.fields['allMediaEntries'] do
       context 'field' do
@@ -56,34 +50,38 @@ describe Types::QueryType do
 
       context 'response' do
         before(:all) do
-          FactoryGirl.create_list(:media_entry_with_title, 101)
+          create_list(:media_entry_with_title, 101)
         end
 
         context 'for query with no arguments specified' do
           let(:query) { media_entries_query }
           let(:response) { response_data(query, nil)['allMediaEntries'] }
-          let(:stringified_created_ats) { MediaEntry.order('created_at DESC').
-                                          first(100).
-                                          pluck(:created_at).
-                                          map(&:to_s) }
+          let(:stringified_created_ats) do
+            MediaEntry.order('created_at DESC')
+                      .first(100)
+                      .pluck(:created_at)
+                      .map(&:to_s)
+          end
 
           it 'contains first 100 media entries ordered by CREATED_AT_DESC' do
-            expect(stringified_created_ats_from_response(response)).
-              to eq(stringified_created_ats)
+            expect(stringified_created_ats_from_response(response))
+              .to eq(stringified_created_ats)
           end
         end
 
         context 'for query with arguments' do
           let(:query) { media_entries_query(first: 11, order_by: 'CREATED_AT_ASC') }
           let(:response) { response_data(query, nil)['allMediaEntries'] }
-          let(:stringified_created_ats) { MediaEntry.order('created_at ASC').
-                                          first(11).
-                                          pluck(:created_at).
-                                          map(&:to_s) }
+          let(:stringified_created_ats) do
+            MediaEntry.order('created_at ASC')
+                      .first(11)
+                      .pluck(:created_at)
+                      .map(&:to_s)
+          end
 
           it 'contains specified number of media entries in specified order' do
-            expect(stringified_created_ats_from_response(response)).
-              to eq(stringified_created_ats)
+            expect(stringified_created_ats_from_response(response))
+              .to eq(stringified_created_ats)
           end
         end
       end
@@ -106,24 +104,41 @@ describe Types::QueryType do
       end
 
       context 'response' do
-        let(:collection) { FactoryGirl.create(:collection,
-                                               get_metadata_and_previews: true) }
-        let(:private_collection) { FactoryGirl.create(:collection) }
+        let(:collection) do
+          create(:collection,
+                 get_metadata_and_previews: true)
+        end
+
+        let(:private_collection) { create(:collection) }
         let(:first) { 2 }
         let(:query) { QueriesHelpers::CollectionQuery.new(0).query }
-        let(:variables) { { 'id' => collection.id,
-                            'first' => first,
-                            'orderBy' => 'CREATED_AT_ASC',
-                            'mediaEntriesMediaTypes' => ['IMAGE', 'AUDIO'],
-                            'previewsMediaTypes' => ['IMAGE', 'AUDIO'] } }
+
+        let(:variables) do
+          { 'id' => collection.id,
+            'first' => first,
+            'orderBy' => 'CREATED_AT_ASC',
+            'mediaEntriesMediaTypes' => %w[IMAGE AUDIO],
+            'previewsMediaTypes' => %w[IMAGE AUDIO] }
+        end
+
+        let(:media_entry_1) { create :media_entry_with_image_media_file }
+        let(:media_entry_2) { create :media_entry_with_image_media_file }
+        let(:media_entry_3) { create :media_entry_with_image_media_file }
+        let(:media_entry_4) { create :media_entry_with_image_media_file }
+        let!(:media_entries) { [ media_entry_1,
+                                media_entry_2,
+                                media_entry_3,
+                                media_entry_4 ] }
+
+
         let(:response) { response_data(query, variables)['set'] }
 
         it 'contains an error when collection is not public' do
-          variables = {'id' => private_collection.id,
-                       'mediaEntriesMediaTypes' => ['IMAGE', 'AUDIO'],
-                       'previewsMediaTypes' => ['IMAGE', 'AUDIO'] }
-          expect(response_to_h(query,  variables)['errors'][0]['message']).
-            to eq('This collection is not public.')
+          variables = { 'id' => private_collection.id,
+                        'mediaEntriesMediaTypes' => %w[IMAGE AUDIO],
+                        'previewsMediaTypes' => %w[IMAGE AUDIO] }
+          expect(response_to_h(query, variables)['errors'][0]['message'])
+            .to eq('This collection is not public.')
         end
 
         it 'contains id' do
@@ -131,50 +146,45 @@ describe Types::QueryType do
         end
 
         it 'contains first n media entries from collection as edges - an array of nodes' do
-          fill_collection_with_media_entries_with_images(collection, 4)
-
+          collection.media_entries = media_entries
           edges = response['childMediaEntries']['edges']
           node_keys = edges.map(&:keys).flatten.uniq
           ids = edges.map { |n| n['node']['id'] }
 
-          expect(node_keys).to eq(['cursor', 'node'])
+          expect(node_keys).to eq(%w[cursor node])
           expect(response['childMediaEntries']['edges'].length).to eq(first)
-          expect(ids).to eq(collection.media_entries.take(2).pluck(:id))
+          expect(ids).to eq([media_entry_1.id, media_entry_2.id])
         end
 
         it 'contains first n media entries after cursor' do
-          fill_collection_with_media_entries_with_images(collection, 4)
-
+          collection.media_entries = media_entries
           variables = { 'id' => collection.id,
                         'first' => first,
                         'cursor' => response['childMediaEntries']['edges'][1]['cursor'],
-                        'mediaEntriesMediaTypes' => ['IMAGE', 'AUDIO'],
-                        'previewsMediaTypes' => ['IMAGE', 'AUDIO'] }
+                        'mediaEntriesMediaTypes' => %w[IMAGE AUDIO],
+                        'previewsMediaTypes' => %w[IMAGE AUDIO] }
           response = response_data(query, variables)['set']
 
           expect(response['childMediaEntries']['edges'].length).to eq(first)
         end
 
         it 'contains media entries ordered as speficied in query' do
-          fill_collection_with_media_entries_with_images(collection, 4)
-
+          collection.media_entries = media_entries
           query = QueriesHelpers::CollectionQuery.new(0).query
           variables = { 'id' => collection.id,
-                       'first' => collection.media_entries.length,
-                       'orderBy' => 'CREATED_AT_ASC',
-                       'mediaEntriesMediaTypes' => ['IMAGE', 'AUDIO'],
-                       'previewsMediaTypes' => ['IMAGE', 'AUDIO'] }
+                        'first' => collection.media_entries.length,
+                        'orderBy' => 'CREATED_AT_ASC',
+                        'mediaEntriesMediaTypes' => %w[IMAGE AUDIO],
+                        'previewsMediaTypes' => %w[IMAGE AUDIO] }
           response = response_data(query, variables)['set']
-
           ids = response['childMediaEntries']['edges'].map { |n| n['node']['id'] }
-          ordered_media_entries = collection.media_entries.order('created_at ASC')
 
-          expect(ids).to eq(ordered_media_entries.ids)
+          expect(ids).to eq(media_entries.map(&:id))
         end
 
         it 'contains page info for media entries collection' do
-          expect(response['childMediaEntries']['pageInfo'].keys).
-            to eq(%w(endCursor startCursor hasPreviousPage hasNextPage))
+          expect(response['childMediaEntries']['pageInfo'].keys)
+            .to eq(%w[endCursor startCursor hasPreviousPage hasNextPage])
         end
 
         it 'contains nested collections' do
@@ -182,8 +192,8 @@ describe Types::QueryType do
 
           query = QueriesHelpers::CollectionQuery.new(5).query
           variables = { 'id' => collection.id,
-                        'mediaEntriesMediaTypes' => ['IMAGE', 'AUDIO'],
-                        'previewsMediaTypes' => ['IMAGE', 'AUDIO'] }
+                        'mediaEntriesMediaTypes' => %w[IMAGE AUDIO],
+                        'previewsMediaTypes' => %w[IMAGE AUDIO] }
           response = response_data(query, variables)['set']
 
           expect(node_from_nested_connection(response, 'sets', 5)).to be

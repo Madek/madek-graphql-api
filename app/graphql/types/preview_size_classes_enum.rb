@@ -10,4 +10,3 @@ class Types::PreviewSizeClassesEnum < Types::BaseEnum
   value 'X_LARGE', value: 'x_large'
   value 'MAXIMUM', value: 'maximum'
 end
-

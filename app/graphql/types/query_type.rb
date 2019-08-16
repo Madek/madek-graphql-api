@@ -1,13 +1,12 @@
 module Types
   class QueryType < Types::BaseObject
-
     field :set,
-           CollectionType,
-           null: false,
-           method: :itself do
+          CollectionType,
+          null: false,
+          method: :itself do
       description 'Find a Collection by ID'
       argument :id, ID, required: true
-      argument :orderBy,  Types::OrderByEnum, required: false
+      argument :orderBy, Types::OrderByEnum, required: false
     end
 
     field :all_media_entries, [Types::MediaEntryType], null: true do
@@ -47,8 +46,7 @@ module Types
     end
 
     def all_media_entries(first: 100, order_by: 'created_at DESC', limit: 1000)
-      MediaEntry.order(order_by).first(first)#.limit(limit)
+      MediaEntry.order(order_by).first(first) # .limit(limit)
     end
   end
 end
-
