@@ -4,8 +4,6 @@ class Vocabulary < ApplicationRecord
 
   include Concerns::Entrust
   include Concerns::PermissionsAssociations
-  include Concerns::Vocabularies::AccessScopesAndHelpers
-  include Concerns::Vocabularies::Filters
   include Concerns::Orderable
   include Concerns::LocalizedFields
 
