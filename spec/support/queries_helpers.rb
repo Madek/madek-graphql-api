@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module QueriesHelpers
   def media_entry_query
     "query getMediaEntry($id: ID!) {

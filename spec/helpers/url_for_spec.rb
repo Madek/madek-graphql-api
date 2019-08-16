@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 describe UrlFor do
   %w[collection media_entry preview].each do |resource|
     it "defines #{resource} method that accepts one #{resource.capitalize} instance as argument" do

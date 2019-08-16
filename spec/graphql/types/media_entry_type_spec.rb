@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 describe Types::MediaEntryType do
   context 'type definition' do
     subject { Types::MediaEntryType }

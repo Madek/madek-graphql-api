@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class Types::PreviewsMediaTypesEnum < Types::BaseEnum
   graphql_name 'PreviewsMediaTypesEnum'
   description 'Previews media types'

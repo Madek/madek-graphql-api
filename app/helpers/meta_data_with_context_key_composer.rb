@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class MetaDataWithContextKeyComposer
   def self.compose_array_for(kontext)
     arr = []

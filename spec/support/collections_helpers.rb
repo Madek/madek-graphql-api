@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module CollectionsHelpers
   def fill_collection_with_nested_collections(collection, depth)
     depth.times do

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Types
   class PreviewType < Types::BaseObject
     field :id, String, null: false

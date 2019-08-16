@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 describe 'querying Metadata by Context', type: :request do
   let(:context_key_0) { create(:context_key) }
   let(:context_key_1) { create(:context_key) }

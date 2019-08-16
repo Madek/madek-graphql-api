@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 describe 'getCollection' do
   before(:each) do
     set_collection

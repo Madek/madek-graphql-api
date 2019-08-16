@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module TypesHelpers
   def type(type)
     "GraphQL::Types::#{type}"

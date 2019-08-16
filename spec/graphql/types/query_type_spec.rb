@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 describe Types::QueryType do
   describe 'MediaEntryType fields' do
     describe Types::QueryType.fields['mediaEntry'] do

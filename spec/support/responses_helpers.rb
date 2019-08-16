@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module ResponsesHelpers
   def stringified_created_ats_from_response(response)
     response.map do |media_entry|

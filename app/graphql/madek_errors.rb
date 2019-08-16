@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class MadekErrors
   class NotPublic
     def initialize(object)

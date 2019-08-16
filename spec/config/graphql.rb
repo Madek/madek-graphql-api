@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # NOTE: based on <https://github.com/leihs/leihs-procure/blob/6b51ac57c1d7764831c8fad94d05f84b0bf7882e/server/spec/graphql/graphql_helper.rb>
 #       but adapted to use request-type rails spec helpers
 

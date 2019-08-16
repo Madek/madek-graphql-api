@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 describe 'IntrospectionQuery' do
   it 'responds without error' do
     (query = GraphQL::Introspection::INTROSPECTION_QUERY.presence) || raise

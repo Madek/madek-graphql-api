@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
   # Seed global randomization in this process using the `--seed` CLI option.

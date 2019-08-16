@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class UrlFor
   class << self
     %w[collection media_entry preview].each do |method|

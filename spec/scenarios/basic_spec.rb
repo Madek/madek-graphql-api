@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 describe 'Request-based GraphQL integration tests', type: :request do
   example 'basic introspection works' do
     doc = <<-GRAPHQL

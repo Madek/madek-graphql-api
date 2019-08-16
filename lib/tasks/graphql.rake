@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 desc 'Dump GraphQL schema to file'
 task dump_graphql_schema: :environment do
   schema_path = 'app/graphql/schema.graphql'

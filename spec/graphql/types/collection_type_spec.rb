@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 describe Types::CollectionType do
   context 'type definition' do
     subject { Types::CollectionType }
