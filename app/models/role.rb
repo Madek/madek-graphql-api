@@ -20,16 +20,4 @@ class Role < ApplicationRecord
              'ON meta_data_roles.role_id = roles.id')
       .group('roles.id')
   }
-
-  validate do
-    errors.add(:base, "Label can't be blank") if label.blank?
-  end
-
-  def to_s
-    label
-  end
-
-  def usage_count
-    meta_data.count
-  end
 end

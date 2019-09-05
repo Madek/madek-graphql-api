@@ -37,41 +37,4 @@ class User < ApplicationRecord
   has_and_belongs_to_many :groups
   has_one :admin, dependent: :destroy
   belongs_to :accepted_usage_terms, class_name: 'UsageTerms'
-
-  #############################################################
-
-  validates_format_of \
-    :email,
-    with: /@/, message: "The email must contain a '@' sign."
-
-  #############################################################
-
-  def login=(value)
-    write_attribute :login, (value ? value.downcase : nil)
-  end
-
-  def email=(value)
-    write_attribute :email, (value ? value.downcase : nil)
-  end
-
-  #############################################################
-
-  def admin?
-    !admin.nil?
-  end
-
-  #############################################################
-
-  def reset_usage_terms
-    update!(accepted_usage_terms_id: nil)
-  end
-
-  #############################################################
-
-  def can_edit_permissions_for?(resource)
-    resource.responsible_user == self or
-      resource
-        .user_permissions
-        .where(user_id: id, edit_permissions: true).exists?
-  end
 end

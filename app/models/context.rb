@@ -6,9 +6,4 @@ class Context < ApplicationRecord
            foreign_key: :context_id, dependent: :destroy)
 
   localize_fields :labels, :descriptions
-
-  def to_s
-    id
-  end
-
 end

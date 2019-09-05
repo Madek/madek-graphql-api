@@ -4,8 +4,6 @@ class Vocabulary < ApplicationRecord
 
   include Concerns::Entrust
   include Concerns::PermissionsAssociations
-  include Concerns::Vocabularies::AccessScopesAndHelpers
-  include Concerns::Vocabularies::Filters
   include Concerns::Orderable
   include Concerns::LocalizedFields
 
@@ -24,33 +22,4 @@ class Vocabulary < ApplicationRecord
       .select('vocabularies.*, count(meta_keys.id) AS meta_keys_count')
       .group('vocabularies.id')
   }
-
-  validates :id, presence: true
-
-  def to_s
-    id
-  end
-
-  def self.user_permission_exists_condition(perm_type, user)
-    Permissions::VocabularyUserPermission
-      .user_permission_exists_condition(perm_type, user)
-  end
-
-  def self.group_permission_exists_condition(perm_type, group)
-    Permissions::VocabularyGroupPermission
-      .user_permission_exists_condition(perm_type, group)
-  end
-
-  def self.group_permission_for_user_exists_condition(perm_type, user)
-    Permissions::VocabularyGroupPermission
-      .group_permission_for_user_exists_condition(perm_type, user)
-  end
-
-  def can_have_keywords?
-    !meta_keys.where(meta_datum_object_type: 'MetaDatum::Keywords').empty?
-  end
-
-  def can_have_roles?
-    !meta_keys.where(meta_datum_object_type: 'MetaDatum::Roles').empty?
-  end
 end

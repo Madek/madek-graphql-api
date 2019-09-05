@@ -13,12 +13,6 @@ class Person < ApplicationRecord
   has_many :meta_data_people, class_name: '::MetaDatum::Person'
   has_and_belongs_to_many :roles, join_table: :meta_data_roles
 
-  validate do
-    if [first_name, last_name, pseudonym].all?(&:blank?)
-      errors.add(:base,
-                 'Either first_name or last_name or pseudonym must have a value!')
-    end
-  end
 
   def to_s
     case
@@ -31,20 +25,6 @@ class Person < ApplicationRecord
     end
   end
 
-  def merge_to(receiver, creator_fallback)
-    ActiveRecord::Base.transaction do
-      meta_data_people.each do |mdp|
-        mdp.update_columns(
-          person_id: receiver.id,
-          created_by_id: receiver.user.try(:id) || creator_fallback.id
-        )
-      end
-      user.update!(person: receiver) if user
-      destroy!
-    end
-  end
-
-  # used in explore catalog
   def self.for_meta_key_and_used_in_visible_entries_with_previews(meta_key,
                                                                   user,
                                                                   limit)
@@ -60,44 +40,4 @@ class Person < ApplicationRecord
       )
       .limit(limit)
   end
-
-  def self.with_usage_count
-    select('people.*, count(people.id) AS usage_count')
-      .joins(:meta_data)
-      .group('people.id')
-      .reorder('usage_count DESC')
-  end
-
-  # rubocop:disable Metrics/MethodLength
-  # used in admin
-  def self.admin_with_usage_count
-    select(<<-SQL)
-      people.*,
-      COUNT(meta_data_people.meta_datum_id) AS meta_data_usage_count,
-      COUNT(DISTINCT media_entries.id) AS media_entries_usage_count,
-      COUNT(DISTINCT collections.id) AS collections_usage_count
-    SQL
-      .joins(<<-SQL)
-        LEFT JOIN meta_data_people
-        ON meta_data_people.person_id = people.id
-      SQL
-      .joins(<<-SQL)
-        LEFT JOIN meta_data
-        ON meta_data.id = meta_data_people.meta_datum_id
-      SQL
-      .joins(<<-SQL)
-        LEFT JOIN media_entries
-        ON media_entries.id = meta_data.media_entry_id
-      SQL
-      .joins(<<-SQL)
-        LEFT JOIN collections
-        ON collections.id = meta_data.collection_id
-      SQL
-      .where(<<-SQL)
-        (media_entries.id IS NOT NULL AND media_entries.is_published)
-        OR media_entries.id IS NULL
-      SQL
-      .group('people.id')
-  end
-  # rubocop:enable Metrics/MethodLength
 end
