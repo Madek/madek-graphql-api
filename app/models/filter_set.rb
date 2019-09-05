@@ -23,17 +23,4 @@ class FilterSet < ApplicationRecord
   include Concerns::MediaResources::Highlight
   include Concerns::MediaResources::MetaDataArelConditions
   include Concerns::SharedOrderBy
-
-  # NOTE: could possibly be made as a DB trigger
-  # NOTE: disabled because there is no workflow yet
-  # validate :validate_existence_of_meta_data_for_required_context_keys
-
-  def self.joins_meta_data_title
-    joins_meta_data_title_by_classname
-  end
-
-  def self.order_by_last_edit_session
-    order_by_last_edit_session_by_classname
-  end
-
 end
