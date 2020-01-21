@@ -1,6 +1,6 @@
 class Role < ApplicationRecord
 
-  include Concerns::Roles::Filters
+  # include Concerns::Roles::Filters
   include Concerns::FindResource
   include Concerns::LocalizedFields
 
