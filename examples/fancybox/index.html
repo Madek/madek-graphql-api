@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Color Systems | Sound-Colour-Space</title>
+
+    <!-- fancybox CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css"
+      integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA="
+      crossorigin="anonymous"
+    />
+    <!-- site CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha256-YLGeXaapI0/5IgZopewRJcFXomhRMlYYjugPLSyNjTY="
+      crossorigin="anonymous"
+    />
+    <style media="screen">
+      .ui-gallery figure a img {
+        max-height: 20rem;
+      }
+      .fancybox-is-open.fancybox-is-fullscreen .fancybox-bg {
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="row mb-4 ml-4 my-5"><h1>Colour Systems</h1></header>
+
+    <div class="mx-4">
+      <button
+        type="button"
+        class="btn btn-outline-dark"
+        onclick="
+        $.fancybox.open($('[data-fancybox]'), {
+          arrows: false,
+          slideShow: { autoStart: true },
+          fullScreen: { autoStart: true },
+        });
+        "
+      >
+        ▶︎ PLAY
+      </button>
+    </div>
+
+    <!-- gallery container -->
+    <div class="ui-gallery row no-gutters mb-4 mx-4 my-5">
+      <!-- <div class="col-6 col-lg-4"> -->
+
+      <!--
+        Entry: Preview Image like on Entry#Show; Link to fullsize; Caption, Link to Source
+      -->
+      <figure class="col-6 col-md-3 col-lg-2 pb-4 pr-4">
+        <a
+          class="ui-fig-a d-block mb-4"
+          data-fancybox="images"
+          href="https://medienarchiv.zhdk.ch/media/5314d4a7-3aa5-45e5-8682-a7309bca63fe"
+          data-caption="Colour Circle | Johann Wolfgang Goethe (1809)"
+        >
+          <img
+            class="img-fluid"
+            src="https://medienarchiv.zhdk.ch/media/94a7b552-6f33-4d23-896e-99e64a388d30"
+          />
+        </a>
+        <figcaption>
+          <h6>Colour Circle</h6>
+          <a href="https://medienarchiv.zhdk.ch/entries/socospa_diagram_5061">
+            Johann Wolfgang Goethe (1809)
+          </a>
+        </figcaption>
+      </figure>
+
+      <figure class="col-6 col-md-3 col-lg-2 pb-4 pr-4">
+        <a
+          class="ui-fig-a d-block mb-4"
+          data-fancybox="images"
+          href="https://medienarchiv.zhdk.ch/media/967618e9-ed02-4181-bd0a-1b4604a7da5d"
+          data-caption="Schiller/Goethe: Temperamentrose - Circle of Colours and Temperaments | Johann Wolfgang Goethe, Friedrich Schiller (1799)"
+        >
+          <img
+            class="img-fluid"
+            src="https://medienarchiv.zhdk.ch/media/03f62676-e803-4f27-ba97-9446a3c1ae94"
+          />
+        </a>
+        <figcaption>
+          <h6>
+            Schiller/Goethe: Temperamentrose - Circle of Colours and
+            Temperaments
+          </h6>
+          <a href="https://medienarchiv.zhdk.ch/entries/socospa_diagram_5055">
+            Johann Wolfgang Goethe, Friedrich Schiller (1799)
+          </a>
+        </figcaption>
+      </figure>
+
+      <figure class="col-6 col-md-3 col-lg-2 pb-4 pr-4">
+        <a
+          class="ui-fig-a d-block mb-4"
+          data-fancybox="images"
+          href="https://medienarchiv.zhdk.ch/media/9a813383-6dd4-42c4-bef8-ba36e986df2e"
+          data-caption="Tetrahedron of Colours | Johann Heinrich Lambert (1772)"
+        >
+          <img
+            class="img-fluid"
+            src="https://medienarchiv.zhdk.ch/media/fa3daddd-3062-4698-aee6-8c7a8c1fb1d0"
+          />
+        </a>
+        <figcaption>
+          <h6>Tetrahedron of Colours</h6>
+          <a href="https://medienarchiv.zhdk.ch/entries/socospa_diagram_5049">
+            Johann Heinrich Lambert (1772)
+          </a>
+        </figcaption>
+      </figure>
+
+      <figure class="col-6 col-md-3 col-lg-2 pb-4 pr-4">
+        <a
+          class="ui-fig-a d-block mb-4"
+          data-fancybox="images"
+          href="https://medienarchiv.zhdk.ch/media/17bd122c-56d4-40e5-a1f4-603a3fad0344"
+          data-caption="Colour circles | Claude Boutet (1708)"
+        >
+          <img
+            class="img-fluid"
+            src="https://medienarchiv.zhdk.ch/media/7d246d07-f0ee-4699-bb8d-a3fafb3767ce"
+          />
+        </a>
+        <figcaption>
+          <h6>Colour circles</h6>
+          <a href="https://medienarchiv.zhdk.ch/entries/socospa_diagram_5041">
+            Claude Boutet (1708)
+          </a>
+        </figcaption>
+      </figure>
+
+      <figure class="col-6 col-md-3 col-lg-2 pb-4 pr-4">
+        <a
+          class="ui-fig-a d-block mb-4"
+          data-fancybox="images"
+          href="https://medienarchiv.zhdk.ch/media/71285907-8c7a-4674-9228-10929355797d"
+          data-caption="Sound Colour Circle for Itten | Josef Matthias Hauer (1919)"
+        >
+          <img
+            class="img-fluid"
+            src="https://medienarchiv.zhdk.ch/media/a3a0c615-df52-46de-b5ca-9c43d9f0548e"
+          />
+        </a>
+        <figcaption>
+          <h6>Sound Colour Circle for Itten</h6>
+          <a href="https://medienarchiv.zhdk.ch/entries/socospa_diagram_5106">
+            Josef Matthias Hauer (1919)
+          </a>
+        </figcaption>
+      </figure>
+
+      <figure class="col-6 col-md-3 col-lg-2 pb-4 pr-4">
+        <a
+          class="ui-fig-a d-block mb-4"
+          data-fancybox="images"
+          href="https://medienarchiv.zhdk.ch/media/71269e64-a3f8-48c7-863d-46572eadd8bc"
+          data-caption="Colour Triangle | Tobias Mayer (1775)"
+        >
+          <img
+            class="img-fluid"
+            src="https://medienarchiv.zhdk.ch/media/2a94bc97-aa69-45e5-9d60-aea0b64593bc"
+          />
+        </a>
+        <figcaption>
+          <h6>Colour Triangle</h6>
+          <a href="https://medienarchiv.zhdk.ch/entries/socospa_diagram_5051">
+            Tobias Mayer (1775)
+          </a>
+        </figcaption>
+      </figure>
+
+      <figure class="col-6 col-md-3 col-lg-2 pb-4 pr-4">
+        <a
+          class="ui-fig-a d-block mb-4"
+          data-fancybox="images"
+          href="https://medienarchiv.zhdk.ch/media/2c83c9b7-cdbb-4522-b7bf-1ef7b92f5f3b"
+          data-caption="Farbenkugel - Sphere of Colours | Philipp Otto Runge (1810)"
+        >
+          <img
+            class="img-fluid"
+            src="https://medienarchiv.zhdk.ch/media/ff0899b8-a37f-4709-abb3-16f875a33bbc"
+          />
+        </a>
+        <figcaption>
+          <h6>Farbenkugel - Sphere of Colours</h6>
+          <a href="https://medienarchiv.zhdk.ch/entries/socospa_diagram_5069">
+            Philipp Otto Runge (1810)
+          </a>
+        </figcaption>
+      </figure>
+
+      <figure class="col-6 col-md-3 col-lg-2 pb-4 pr-4">
+        <a
+          class="ui-fig-a d-block mb-4"
+          data-fancybox="images"
+          href="https://medienarchiv.zhdk.ch/media/7a35052a-50a5-4cff-ba5d-c61dbbef3ca5"
+          data-caption="Ordnung der Farbenclasse - Die Blühenden Farben | Ignaz Schiffermüller (1772)"
+        >
+          <img
+            class="img-fluid"
+            src="https://medienarchiv.zhdk.ch/media/fb490023-5814-4550-805c-cc1957fe8cc0"
+          />
+        </a>
+        <figcaption>
+          <h6>Ordnung der Farbenclasse - Die Blühenden Farben</h6>
+          <a href="https://medienarchiv.zhdk.ch/entries/socospa_diagram_5050">
+            Ignaz Schiffermüller (1772)
+          </a>
+        </figcaption>
+      </figure>
+
+      <figure class="col-6 col-md-3 col-lg-2 pb-4 pr-4">
+        <a
+          class="ui-fig-a d-block mb-4"
+          data-fancybox="images"
+          href="https://medienarchiv.zhdk.ch/media/1c076cd2-ad8f-4991-b739-8e2a042534c1"
+          data-caption="Three colour printing | &quot;Dreifarbendruck&quot;, Meyers Konversationslexikon, 6. Auflage, Leipzig
+          1904, Bd. 5, ad 186"
+        >
+          <img
+            class="img-fluid"
+            src="https://medienarchiv.zhdk.ch/media/9357f050-5e4c-417d-8f4a-7608c2b188e0"
+          />
+        </a>
+        <figcaption>
+          <h6>Three colour printing</h6>
+          <a href="https://medienarchiv.zhdk.ch/entries/socospa_diagram_5101">
+            "Dreifarbendruck", Meyers Konversationslexikon, 6. Auflage, Leipzig
+            1904, Bd. 5, ad 186
+          </a>
+        </figcaption>
+      </figure>
+
+      <figure class="col-6 col-md-3 col-lg-2 pb-4 pr-4">
+        <a
+          class="ui-fig-a d-block mb-4"
+          data-fancybox="images"
+          href="https://medienarchiv.zhdk.ch/media/afb39524-aea7-4f92-b1bb-1cf5d26828da"
+          data-caption="Sound Colour Circle for Itten | Josef Matthias Hauer (c. 1919)"
+        >
+          <img
+            class="img-fluid"
+            src="https://medienarchiv.zhdk.ch/media/62149b88-0129-4212-9e82-54b92e9fe8a4"
+          />
+        </a>
+        <figcaption>
+          <h6>Sound Colour Circle for Itten</h6>
+          <a href="https://medienarchiv.zhdk.ch/entries/socospa_diagram_5105">
+            Josef Matthias Hauer (c. 1919)
+          </a>
+        </figcaption>
+      </figure>
+
+      <figure class="col-6 col-md-3 col-lg-2 pb-4 pr-4">
+        <a
+          class="ui-fig-a d-block mb-4"
+          data-fancybox="images"
+          href="https://medienarchiv.zhdk.ch/media/2540387d-a183-4bd3-8bd0-8dbe33478d5e"
+          data-caption="Scheme of Colours | Moses Harris (c. 1770)"
+        >
+          <img
+            class="img-fluid"
+            src="https://medienarchiv.zhdk.ch/media/14ae0aed-499a-4856-aa0f-39d2075ba79a"
+          />
+        </a>
+        <figcaption>
+          <h6>Scheme of Colours</h6>
+          <a href="https://medienarchiv.zhdk.ch/entries/socospa_diagram_5047">
+            Moses Harris (c. 1770)
+          </a>
+        </figcaption>
+      </figure>
+
+      <figure class="col-6 col-md-3 col-lg-2 pb-4 pr-4">
+        <a
+          class="ui-fig-a d-block mb-4"
+          data-fancybox="images"
+          href="https://medienarchiv.zhdk.ch/media/fa46e250-9e3b-4c49-a2e8-20c775ff89f4"
+          data-caption="Konstruktive Komposition mit Dreiklang Gelb-Rot-Blau | Carl Buchheister (1925)"
+        >
+          <img
+            class="img-fluid"
+            src="https://medienarchiv.zhdk.ch/media/dfd7549a-79d6-47c9-ae50-b19cfa0c7b3b"
+          />
+        </a>
+        <figcaption>
+          <h6>Konstruktive Komposition mit Dreiklang Gelb-Rot-Blau</h6>
+          <a href="https://medienarchiv.zhdk.ch/entries/socospa_diagram_5107">
+            Carl Buchheister (1925)
+          </a>
+        </figcaption>
+      </figure>
+    </div>
+    <!-- end gallery container -->
+
+    <!-- fancybox JS -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"
+      integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8="
+      crossorigin="anonymous"
+    ></script>
+
+    <script type="text/javascript">
+      $(function() {
+        var conf = $.fancybox.defaults;
+
+        conf.loop = true;
+        conf.image.preload = true;
+        conf.idleTime = 5;
+        conf.buttons = [
+          "thumbs",
+          "zoom",
+          "download",
+          "slideShow",
+          "fullScreen",
+          //"share",
+          "close"
+        ];
+      });
+    </script>
+  </body>
+</html>
