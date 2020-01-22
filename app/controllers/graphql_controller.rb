@@ -3,11 +3,22 @@ class GraphqlController < ApplicationController
     variables = ensure_hash(params[:variables])
     query = params[:query]
     operation_name = params[:operationName]
+    
+    if !query.present?
+      raise "No `query` parameter given!"
+    end
+
     context = {
       # Query context goes here, for example:
       # current_user: current_user,
     }
-    result = MadekGraphqlSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
+    parsed_query = GraphQL.parse(query)
+    ensure_operations_match_http_method(request, parsed_query)
+    result = MadekGraphqlSchema.execute(
+      document: parsed_query,
+      variables: variables,
+      context: context,
+      operation_name: operation_name)
     render json: result
   rescue => e
     raise e unless Rails.env.development?
@@ -31,6 +42,17 @@ class GraphqlController < ApplicationController
       {}
     else
       raise ArgumentError, "Unexpected parameter: #{ambiguous_param}"
+    end
+  end
+
+  def ensure_operations_match_http_method(request, gql_doc)
+    doc_has_only_queries = gql_doc.definitions
+      .select {|d| d.is_a? GraphQL::Language::Nodes::OperationDefinition }
+      .all? { |d| d.operation_type === 'query'}
+
+    if request.get? && !doc_has_only_queries
+      raise "When using HTTP `GET`, only `query` operations are allowed. " \
+            "For a `mutation`, use HTTP `POST`."
     end
   end
 
