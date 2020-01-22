@@ -4,6 +4,6 @@ PORT=${PORT:-3003}
 
 bundle
 
-{ test $(uname) = Darwin ;} && { sleep 5 && open "http://127.0.0.1:${PORT}/graphiql" ;} & clear
+{ test $(uname) = Darwin ;} && { sleep 5 && open "http://127.0.0.1:${PORT}/graphql/graphiql" ;} & clear
 
 bundle exec rails s -p "${PORT}" -b 127.0.0.1
