@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -exu
+
+# TODO: https://devcenter.heroku.com/articles/rails-4-asset-pipeline#dependencies-improperly-used
+
+# ENV
+export RAILS_ENV=production
+export RAILS_LOG_LEVEL=debug
+export RAILS_RELATIVE_URL_ROOT='' # OMG this somehow affects sprockets asset hashes
+export DISABLE_SECRETS_STRENGTH_CHECK=true
+
+# precompilation: js, css, fonts, images
+bundle exec rake assets:precompile
+
+# cleanup obsoletes
+bundle exec rake assets:clean

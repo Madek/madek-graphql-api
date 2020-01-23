@@ -1,3 +1,6 @@
 [submodule "datalayer"]
 	path = datalayer
 	url = https://github.com/Madek/madek-datalayer
+[submodule "public/assets"]
+	path = public/assets
+	url = https://github.com/Madek/madek-graphql-api-assets
