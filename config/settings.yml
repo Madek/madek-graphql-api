@@ -1,11 +1,2 @@
-test:
-  madek_url: https://medienarchiv.zhdk.ch
-  locale: 'de'
-
-development:
-  madek_url: https://medienarchiv.zhdk.ch
-  locale: 'de'
-
-production:
-  madek_url: https://medienarchiv.zhdk.ch
-  locale: 'de'
+madek_external_base_url: "http://localhost:3100"
+madek_default_locale: "de"

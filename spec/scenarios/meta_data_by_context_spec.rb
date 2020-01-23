@@ -65,7 +65,7 @@ describe 'querying Metadata by Context', type: :request do
     contexts.each_with_index do |c, i|
       kontext = result.find { |k| k[:id] == c.id }
       expect(kontext).to be
-      expect(kontext[:label]).to eq(c.labels[Config.locale])
+      expect(kontext[:label]).to eq(c.labels[Settings[:madek_default_locale]])
 
       kontext_meta_data_node = kontext[:metaData][:edges][0][:node]
       expect(kontext_meta_data_node[:metaDatum].map(&:values).flatten)
