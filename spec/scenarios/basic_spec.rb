@@ -8,19 +8,22 @@ describe 'Request-based GraphQL integration tests', type: :request do
 
     expect(result[:errors]).not_to be_present
 
-    expect(result).to eq(
-      data: { __schema: { queryType: { name: 'Query' } } }
-    )
+    expect(result).to eq(data: { __schema: { queryType: { name: 'Query' } } })
   end
 
   context 'correct error handling' do
-    example 'invalid document' do
+    example 'no document', type: :request do
+      expect(graphql_request('').result).to eq(
+        errors: [{ message: 'No `query` parameter given!' }]
+      )
+    end
+
+    example 'invalid document', type: :request do
       expect(graphql_request('INVALID_DOCUMENT').result).to eq(
         errors: [
           {
             locations: [{ column: 1, line: 1 }],
-            message:
-              'Parse error on "INVALID_DOCUMENT" (IDENTIFIER) at [1, 1]'
+            message: 'Parse error on "INVALID_DOCUMENT" (IDENTIFIER) at [1, 1]'
           }
         ]
       )
@@ -46,7 +49,7 @@ describe 'Request-based GraphQL integration tests', type: :request do
         expect(result[:errors].first.slice(:locations, :message)).to eq(
           locations: [{ column: 26, line: 1 }],
           message:
-            'Variable myTypeName of type String! was provided invalid value'
+            'Variable $myTypeName of type String! was provided invalid value'
         )
       end
 
@@ -56,7 +59,7 @@ describe 'Request-based GraphQL integration tests', type: :request do
         expect(result[:errors].first.slice(:locations, :message)).to eq(
           locations: [{ column: 26, line: 1 }],
           message:
-            'Variable myTypeName of type String! was provided invalid value'
+            'Variable $myTypeName of type String! was provided invalid value'
         )
       end
     end

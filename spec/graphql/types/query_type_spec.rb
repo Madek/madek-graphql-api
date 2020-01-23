@@ -54,7 +54,7 @@ describe Types::QueryType do
         end
 
         context 'for query with no arguments specified' do
-          let(:query) { media_entries_query }
+          let(:query) { '{ allMediaEntries { id createdAt title } }' }
           let(:response) { response_data(query, nil)['allMediaEntries'] }
           let(:stringified_created_ats) do
             MediaEntry.order('created_at DESC')
