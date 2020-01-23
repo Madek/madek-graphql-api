@@ -38,11 +38,21 @@ module MadekGraphqlApi
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
+    # CORS!
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+        resource '*', headers: :any, methods: [:get, :post, :options]
+      end
+    end
+
     # madek-datalayer-specific settings:
     config.active_record.schema_format = :sql
     config.active_record.timestamped_migrations = false
 
     config.paths["config/initializers"] <<  \
       Rails.root.join('datalayer', 'initializers', '030_factory_girl.rb')
+
+
   end
 end
