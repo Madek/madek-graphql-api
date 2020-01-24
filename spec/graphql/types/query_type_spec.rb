@@ -197,7 +197,7 @@ describe Types::QueryType do
           response = response_data(query, variables)['set']
 
           expect(node_from_nested_connection(response, 'sets', 5)).to be
-          expect(response.to_json.scan(/sets/).count).to eq(5)
+          expect(response.to_json.scan(/"sets"/).count).to eq(5)
         end
       end
     end
