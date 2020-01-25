@@ -4,7 +4,7 @@ import Head from "next/head";
 import { useQuery } from "graphql-hooks";
 
 // const PAGE_SIZE = 12;
-const PAGE_SIZE = 2500;
+export const PAGE_SIZE = 2500;
 
 const Page = () => {
   const router = useRouter();
@@ -27,7 +27,7 @@ const Page = () => {
 
 export default Page;
 
-const setWithChildrenForGalleryQuery = `
+export const setWithChildrenForGalleryQuery = `
   query setWithChildrenForGallery($setId: ID!, $limit: Int = 100) {
     set(id: $setId) {
       id
