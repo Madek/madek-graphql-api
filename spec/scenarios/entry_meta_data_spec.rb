@@ -12,6 +12,7 @@ describe 'MediaEntry Metadata', type: :request do
     create(:meta_datum_text_date, media_entry: entry)
     create(:meta_datum_people, media_entry: entry)
     create(:meta_datum_keywords, media_entry: entry)
+    create(:meta_datum_json, media_entry: entry)
     entry
   end
   let(:vars) { { entryId: the_entry.id } }
@@ -21,7 +22,6 @@ describe 'MediaEntry Metadata', type: :request do
       query($entryId: ID!) {
         mediaEntry(id: $entryId) {
           id
-
         }
       }
     GRAPHQL
@@ -57,7 +57,7 @@ describe 'MediaEntry Metadata', type: :request do
     result_md_values = result_md.map { |r| r[:values].map(&:values) }.flatten
     expect(result[:errors]).to be_nil
     expect(result[:data][:mediaEntry][:id]).to eq the_entry.id
-    expect(result_md.count).to be 4
+    expect(result_md.count).to be 5
 
     md.where(type: 'MetaDatum::Text').each do |md|
       expect(result_md_values).to include md.string
@@ -73,6 +73,10 @@ describe 'MediaEntry Metadata', type: :request do
 
     md.where(type: 'MetaDatum::Keywords').map(&:keywords).flatten.each do |kw|
       expect(result_md_values).to include kw.term
+    end
+
+    md.where(type: 'MetaDatum::JSON').each do |json|
+      expect(result_md_values).to include json.value
     end
   end
 end

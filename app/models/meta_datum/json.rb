@@ -1,5 +1,7 @@
-class MetaDatum::JSON < MetaDatum
+class MetaDatum::JSON < MetaDatum::Text
 
-  # NOTE: not yet implemented
-  
+  def value
+    json.to_json
+  end
+
 end
