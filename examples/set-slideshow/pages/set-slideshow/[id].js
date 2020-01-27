@@ -178,16 +178,23 @@ const EntriesGallery = ({ entries }) => (
   <React.Fragment>
     <div className="ui-gallery row no-gutters mb-4 mx-4 my-5">
       {entries.map(entry => {
+        // images
+        const previews = sortPreviewsBySize(entry.mediaFile.previews.nodes);
+        const thumb = previewOfSize("MEDIUM", previews);
+        const fullSize = previewOfSize("MAXIMUM", previews);
+
+        // metadata
         const title = metaDatumStringByKey("madek_core:title", entry);
         const date = metaDatumStringByKey(
           "madek_core:portrayed_object_date",
           entry
         );
         const source = metaDatumStringByKey("copyright:source", entry);
+        const rights = metaDatumStringsByKey(
+          "madek_core:copyright_notice",
+          entry
+        );
         const authors = metaDatumStringsByKey("madek_core:authors", entry);
-        const previews = sortPreviewsBySize(entry.mediaFile.previews.nodes);
-        const thumb = previewOfSize("MEDIUM", previews);
-        const fullSize = previewOfSize("MAXIMUM", previews);
 
         const authorsLine = (authors || ["Unbekannt"]).join(", ");
         const captionLine =
@@ -195,7 +202,7 @@ const EntriesGallery = ({ entries }) => (
             ? `${authorsLine} (${date})`
             : source
             ? source
-            : `${authorsLine}`;
+            : rights;
 
         return (
           <figure className="col-6 col-md-3 col-lg-2 pb-4 pr-4">
