@@ -10,6 +10,7 @@ gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 3.12'
 gem 'rack-cors'
 gem 'rails', '~> 5.2.3'
+gem 'apollo-federation'
 
 group :development, :test do
   gem 'awesome_print'

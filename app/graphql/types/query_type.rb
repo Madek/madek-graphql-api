@@ -25,6 +25,12 @@ module Types
       argument :contexts, [String], required: false
     end
 
+    field :users, [UserType], null: true do
+      description 'Query User by id or login'
+      argument :id, ID, required: false
+      argument :login, ID, required: false
+    end
+
     def meta_data_by_context(contexts:)
       c = Context.where(id: contexts)
       c.any? ? c : Context.all
@@ -47,6 +53,14 @@ module Types
 
     def all_media_entries(first: 100, order_by: 'created_at DESC', limit: 1000)
       MediaEntry.order(order_by).first(first) # .limit(limit)
+    end
+
+    # def user(login:)
+    #   User.find_by(login)
+    # end
+
+    def users
+      User.all
     end
   end
 end

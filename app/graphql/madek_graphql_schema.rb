@@ -1,10 +1,15 @@
+require 'apollo-federation'
 require_relative './types/base_enum'
 
 class MadekGraphqlSchema < GraphQL::Schema
+  include ApolloFederation::Schema
+
+
   # see https://rmosolgo.github.io/blog/2019/01/29/a-new-runtime-in-graphql-ruby-1-dot-9/
   use GraphQL::Execution::Interpreter
   use GraphQL::Analysis::AST
   use GraphQL::Execution::Errors
+
 
   max_depth 25
   middleware(GraphQL::Schema::TimeoutMiddleware.new(max_seconds: 2))

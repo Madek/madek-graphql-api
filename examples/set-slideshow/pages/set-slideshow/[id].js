@@ -10,6 +10,40 @@ const Page = () => {
   const router = useRouter();
   const { id } = router.query;
 
+  const { loading, error, data, ...request } = useQuery(
+    setWithChildrenForGalleryQuery,
+    {
+      variables: { setId: id, limit: PAGE_SIZE }
+    }
+  );
+
+  if (loading) {
+    return (
+      <div className="row no-gutters mb-4 mx-4 my-5 text-center">
+        <p className="text-center h3 w-100">{"⚡️ Loading…"}</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    const errMsg = ["fetchError", "httpError", "graphQLErrors"].reduce(
+      (m, k) =>
+        Object.assign(m, {
+          [k]: (request[k] && request[k].message) || request[k]
+        }),
+      {}
+    );
+    console.error(errMsg);
+    return (
+      <div className="row no-gutters mb-4 mx-4 my-5">
+        <p className="text-center h3 w-100">{"💀 Error!"}</p>
+        <pre className="m-6 mx-auto alert alert-danger">
+          {JSON.stringify(errMsg, 0, 2)}
+        </pre>
+      </div>
+    );
+  }
+
   return (
     <React.Fragment>
       <Head>
@@ -18,7 +52,7 @@ const Page = () => {
         {FancyBoxJsTop()}
       </Head>
 
-      <SetSlideshow setId={id} />
+      <SetSlideshow set={data.set} />
 
       <FancyBoxJSBottom />
     </React.Fragment>
@@ -27,7 +61,7 @@ const Page = () => {
 
 export default Page;
 
-const setWithChildrenForGalleryQuery = `
+const setWithChildrenForGalleryQuery = /* GraphQL */ `
   query setWithChildrenForGallery($setId: ID!, $limit: Int = 100) {
     set(id: $setId) {
       id
@@ -75,42 +109,7 @@ const setWithChildrenForGalleryQuery = `
   }
 `;
 
-const SetSlideshow = ({ setId }) => {
-  const { loading, error, data, ...request } = useQuery(
-    setWithChildrenForGalleryQuery,
-    {
-      variables: { setId, limit: PAGE_SIZE }
-    }
-  );
-
-  if (loading) {
-    return (
-      <div className="row no-gutters mb-4 mx-4 my-5 text-center">
-        <p className="text-center h3 w-100">{"⚡️ Loading…"}</p>
-      </div>
-    );
-  }
-
-  if (error) {
-    const errMsg = ["fetchError", "httpError", "graphQLErrors"].reduce(
-      (m, k) => ({
-        ...m,
-        [k]: (request[k] && request[k].message) || request[k]
-      }),
-      {}
-    );
-    console.error(errMsg);
-    return (
-      <div className="row no-gutters mb-4 mx-4 my-5">
-        <p className="text-center h3 w-100">{"💀 Error!"}</p>
-        <pre className="m-6 mx-auto alert alert-danger">
-          {JSON.stringify(errMsg, 0, 2)}
-        </pre>
-      </div>
-    );
-  }
-
-  const { set } = data;
+const SetSlideshow = ({ set }) => {
   const entries = set.childMediaEntries.nodes;
   const title = metaDatumStringByKey("madek_core:title", set);
 
@@ -138,41 +137,6 @@ const SetSlideshow = ({ setId }) => {
     </React.Fragment>
   );
 };
-
-function metaDatumStringsByKey(key, resource) {
-  const mds = resource.metaData.nodes.filter(md => md.metaKey.id === key);
-  if (!mds[0]) return;
-  return mds[0].values.map(v => v.string);
-}
-function metaDatumStringByKey(key, resource) {
-  const mdvs = metaDatumStringsByKey(key, resource);
-  if (mdvs && mdvs[0]) return mdvs[0];
-}
-const IMG_SIZE_CLASSES = [
-  "MAXIMUM",
-  "X_LARGE",
-  "LARGE",
-  "MEDIUM",
-  "SMALL",
-  "SMALL_125"
-];
-function sizeClassOrder(p) {
-  return IMG_SIZE_CLASSES.indexOf(p.sizeClass);
-}
-function sortPreviewsBySize(previews) {
-  const ps = [...previews];
-  ps.sort((a, b) => sizeClassOrder(a) - sizeClassOrder(b));
-  return ps;
-}
-function previewOfSize(sizeClass, previews) {
-  const wantedOrHigher = IMG_SIZE_CLASSES.slice(
-    0,
-    sizeClassOrder({ sizeClass }) + 1
-  );
-  const allPs = sortPreviewsBySize(previews);
-  const ps = allPs.filter(p => wantedOrHigher.includes(p.sizeClass)).reverse();
-  if (ps[0]) return ps[0];
-}
 
 const EntriesGallery = ({ entries }) => (
   <React.Fragment>
@@ -283,3 +247,38 @@ const FancyBoxJSBottom = () => (
 const InlineScript = ({ children, type = "text/javascript" }) => (
   <script type={type} dangerouslySetInnerHTML={{ __html: children }}></script>
 );
+
+function metaDatumStringsByKey(key, resource) {
+  const mds = resource.metaData.nodes.filter(md => md.metaKey.id === key);
+  if (!mds[0]) return;
+  return mds[0].values.map(v => v.string);
+}
+function metaDatumStringByKey(key, resource) {
+  const mdvs = metaDatumStringsByKey(key, resource);
+  if (mdvs && mdvs[0]) return mdvs[0];
+}
+const IMG_SIZE_CLASSES = [
+  "MAXIMUM",
+  "X_LARGE",
+  "LARGE",
+  "MEDIUM",
+  "SMALL",
+  "SMALL_125"
+];
+function sizeClassOrder(p) {
+  return IMG_SIZE_CLASSES.indexOf(p.sizeClass);
+}
+function sortPreviewsBySize(previews) {
+  const ps = [...previews];
+  ps.sort((a, b) => sizeClassOrder(a) - sizeClassOrder(b));
+  return ps;
+}
+function previewOfSize(sizeClass, previews) {
+  const wantedOrHigher = IMG_SIZE_CLASSES.slice(
+    0,
+    sizeClassOrder({ sizeClass }) + 1
+  );
+  const allPs = sortPreviewsBySize(previews);
+  const ps = allPs.filter(p => wantedOrHigher.includes(p.sizeClass)).reverse();
+  if (ps[0]) return ps[0];
+}
