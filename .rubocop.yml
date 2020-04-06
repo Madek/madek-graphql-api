@@ -1,22 +1,22 @@
 AllCops:
-  TargetRubyVersion: 2.6.3
+  TargetRubyVersion: 2.6.6
   Exclude:
-    - 'Gemfile'
-    - 'cider-ci/**/*'
-    - 'config/**/*'
-    - 'db/**/*'
-    - 'datalayer/**/*'
-    - 'scripts/**/*'
-    - 'bin/**/*'
-    - 'dev/**/*'
-    - 'tmp/**/*'
-    - 'test/**/*'
-    - 'vendor/**/*'
+    - "Gemfile"
+    - "cider-ci/**/*"
+    - "config/**/*"
+    - "db/**/*"
+    - "datalayer/**/*"
+    - "scripts/**/*"
+    - "bin/**/*"
+    - "dev/**/*"
+    - "tmp/**/*"
+    - "test/**/*"
+    - "vendor/**/*"
 
-    - 'app/models/**/*'
-    - 'app/channels/**/*'
-    - 'app/controllers/**/*'
-    - 'app/graphql/schema.graphql'
+    - "app/models/**/*"
+    - "app/channels/**/*"
+    - "app/controllers/**/*"
+    - "app/graphql/schema.graphql"
 
 Documentation:
   Enabled: false
