@@ -11,20 +11,11 @@ const Home = () => (
         example sets:
         <ul>
           <li>
-            <a href="set-slideshow/e9f34e2c-b844-4297-b701-7e512c65e3b5">
-              "Colour Systems"
+            <a href="set-slideshow/51002b71-dd1e-4cce-9904-43bdeb4efa68">
+              "Memes"
             </a>
           </li>
-          <li>
-            <a href="set-slideshow/36e9c917-8c2b-4fe2-a389-fdd4a0602c43">
-              "Ikonografie der Trostschrift"
-            </a>
-          </li>
-          <li>
-            <a href="set-slideshow/3ec95285-9efe-434f-82fe-2a5d60bc489a">
-              "Hands-on IFCAR"
-            </a>
-          </li>
+
         </ul>
       </p>
     </div>
