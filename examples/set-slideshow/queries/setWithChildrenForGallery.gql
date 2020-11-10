@@ -1,0 +1,45 @@
+query setWithChildrenForGallery($setId: ID!, $limit: Int = 100) {
+  set(id: $setId) {
+    id
+    url
+    metaData {
+      nodes {
+        id
+        metaKey {
+          id
+        }
+        values {
+          string
+        }
+      }
+    }
+    childMediaEntries(first: $limit, mediaTypes: [IMAGE]) {
+      nodes {
+        id
+        url
+        metaData {
+          nodes {
+            id
+            metaKey {
+              id
+            }
+            values {
+              string
+            }
+          }
+        }
+        mediaFile {
+          previews(mediaTypes: [IMAGE]) {
+            nodes {
+              id
+              url
+              contentType
+              mediaType
+              sizeClass
+            }
+          }
+        }
+      }
+    }
+  }
+}

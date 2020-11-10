@@ -19,5 +19,8 @@
   },
   "browser": {
     "graphql-hooks-ssr": false
+  },
+  "devDependencies": {
+    "raw-loader": "^4.0.2"
   }
 }

@@ -2,6 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import { useQuery } from "graphql-hooks";
+import setWithChildrenForGalleryQuery from '!!raw-loader!../../queries/setWithChildrenForGallery.gql'
 
 // const PAGE_SIZE = 12;
 const PAGE_SIZE = 2500;
@@ -26,54 +27,6 @@ const Page = () => {
 };
 
 export default Page;
-
-const setWithChildrenForGalleryQuery = `
-  query setWithChildrenForGallery($setId: ID!, $limit: Int = 100) {
-    set(id: $setId) {
-      id
-      url
-      metaData {
-        nodes {
-          id
-          metaKey {
-            id
-          }
-          values {
-            string
-          }
-        }
-      }
-      childMediaEntries(first: $limit, mediaTypes: [IMAGE]) {
-        nodes {
-          id
-          url
-          metaData {
-            nodes {
-              id
-              metaKey {
-                id
-              }
-              values {
-                string
-              }
-            }
-          }
-          mediaFile {
-            previews(mediaTypes: [IMAGE]) {
-              nodes {
-                id
-                url
-                contentType
-                mediaType
-                sizeClass
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
 
 const SetSlideshow = ({ setId }) => {
   const { loading, error, data, ...request } = useQuery(
@@ -198,20 +151,22 @@ const EntriesGallery = ({ entries }) => (
             : `${authorsLine}`;
 
         return (
-          <figure className="col-6 col-md-3 col-lg-2 pb-4 pr-4">
-            <a
-              className="ui-fig-a d-block mb-4"
-              data-fancybox="images"
-              href={fullSize.url}
-              data-caption={`${title} | ${captionLine}`}
-            >
-              <img className="img-fluid" src={thumb.url} />
-            </a>
-            <figcaption>
-              <h6>{title}</h6>
-              <a href={entry.url}>{captionLine}</a>
-            </figcaption>
-          </figure>
+          <div className="col-6 col-md-3 col-lg-2 mb-5 pb-4 pr-4" key={entry.id}>
+            <figure className="d-flex h-100 flex-column">
+              <a
+                className="ui-fig-a d-block mb-4 flex-grow-1 w-100"
+                data-fancybox="images"
+                href={fullSize.url}
+                data-caption={`${title} | ${captionLine}`}
+              >
+                <img className="img-fluid img-thumbnail d-block mx-auto" style={{maxHeight: "12rem"}} src={thumb.url} />
+              </a>
+              <figcaption className="w-100">
+                <h6>{title}</h6>
+                <a href={entry.url}>{captionLine}</a>
+              </figcaption>
+            </figure>
+          </div>
         );
       })}
     </div>
